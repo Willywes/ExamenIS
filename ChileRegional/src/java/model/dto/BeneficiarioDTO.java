@@ -9,35 +9,30 @@ package model.dto;
  *
  * @author Willywes
  */
-public class PersonalDTO {
-
+public class BeneficiarioDTO {
     private int id;
     private int rut;
     private String dv;
-    private String clave;
     private String nombres;
     private String paterno;
     private String materno;
     private int telefono;
     private String email;
-    private boolean activo;
-    private TipoPersonalDTO tipoPersonal;
+    private ClienteDTO cliente;
 
-    public PersonalDTO() {
+    public BeneficiarioDTO() {
     }
 
-    public PersonalDTO(int id, int rut, String dv, String clave, String nombres, String paterno, String materno, int telefono, String email, boolean activo, TipoPersonalDTO tipoPersonal) {
+    public BeneficiarioDTO(int id, int rut, String dv, String nombres, String paterno, String materno, int telefono, String email, ClienteDTO cliente) {
         this.id = id;
         this.rut = rut;
         this.dv = dv;
-        this.clave = clave;
         this.nombres = nombres;
         this.paterno = paterno;
         this.materno = materno;
         this.telefono = telefono;
         this.email = email;
-        this.activo = activo;
-        this.tipoPersonal = tipoPersonal;
+        this.cliente = cliente;
     }
 
     public int getId() {
@@ -50,10 +45,6 @@ public class PersonalDTO {
 
     public String getDv() {
         return dv;
-    }
-
-    public String getClave() {
-        return clave;
     }
 
     public String getNombres() {
@@ -76,18 +67,15 @@ public class PersonalDTO {
         return email;
     }
 
-    public boolean isActivo() {
-        return activo;
-    }
-
-    public TipoPersonalDTO getTipoPersonal() {
-        return tipoPersonal;
+    public ClienteDTO getCliente() {
+        return cliente;
     }
 
     @Override
     public String toString() {
-        return "PersonalDTO{" + "id=" + id + ", rut=" + rut + ", dv=" + dv + ", clave=" + clave + ", nombres=" + nombres + ", paterno=" + paterno + ", materno=" + materno + ", telefono=" + telefono + ", email=" + email + ", activo=" + activo + ", tipoPersonal=" + tipoPersonal.toString() + '}';
+        return "BenecifiarioDTO{" + "id=" + id + ", rut=" + rut + ", dv=" + dv + ", nombres=" + nombres + ", paterno=" + paterno + ", materno=" + materno + ", telefono=" + telefono + ", email=" + email + ", cliente=" + cliente.toString() + '}';
     }
-
+    
+    
     
 }

@@ -12,7 +12,9 @@ import model.dao.PersonalDAO;
 import model.dao.TipoPersonalDAO;
 import model.dto.ClienteDTO;
 import model.dto.PersonalDTO;
+import model.dto.SolicitudDTO;
 import model.dto.TipoPersonalDTO;
+import utils.EstadoSolicitudEmun;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -76,6 +78,9 @@ public class Main {
 //        }
 
 // CCLASEE CLIENTE OK P
+
+   
+      
 
     }
 }
