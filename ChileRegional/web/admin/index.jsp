@@ -36,23 +36,30 @@
         <!-- header -->
         <header>
 
+            <%
+                HttpSession userSession = request.getSession();
+                if (null != userSession.getAttribute("personal")) {
+                    response.sendRedirect("panel.jsp");
+                }
+            %>
+
             <c:if test="${not empty mapMensajes}">
 
-                
+
                 <script>
-                    
+
                     <c:if test="${not empty mapMensajes['rut']}">
-                         $.growl.error({message: "<c:out value="${mapMensajes['rut']}"/>"});
+                    $.growl.error({message: "<c:out value="${mapMensajes['rut']}"/>"});
                     </c:if>
-                        
+
                     <c:if test="${not empty mapMensajes['clave']}">
-                        $.growl.error({message: "<c:out value="${mapMensajes['clave']}"/>"});
+                    $.growl.error({message: "<c:out value="${mapMensajes['clave']}"/>"});
                     </c:if>
-                        
+
                     <c:if test="${not empty mapMensajes['basededatos']}">
-                        $.growl.error({message: "<c:out value="${mapMensajes['basededatos']}"/>" });
+                    $.growl.error({message: "<c:out value="${mapMensajes['basededatos']}"/>"});
                     </c:if>
-                 
+
                 </script>
 
             </c:if>

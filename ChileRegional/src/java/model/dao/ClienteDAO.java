@@ -119,7 +119,7 @@ public class ClienteDAO {
                         rs.getString(4), //clave
                         rs.getTimestamp(5), //fecha 
                         rs.getString(6), //nombres
-                        rs.getString(6), //paterno
+                        rs.getString(7), //paterno
                         rs.getString(8), // materno
                         rs.getString(9), // sexo
                         rs.getString(10), // direccion
@@ -158,7 +158,7 @@ public class ClienteDAO {
                         rs.getString(4), //clave
                         rs.getTimestamp(5), //fecha 
                         rs.getString(6), //nombres
-                        rs.getString(6), //paterno
+                        rs.getString(7), //paterno
                         rs.getString(8), // materno
                         rs.getString(9), // sexo
                         rs.getString(10), // direccion

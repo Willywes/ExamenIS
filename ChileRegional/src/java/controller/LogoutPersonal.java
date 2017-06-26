@@ -7,24 +7,19 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.dao.PersonalDAO;
-import model.dao.TipoUsuarioDAO;
-import model.dto.PersonalDTO;
 
 /**
  *
  * @author Willywes
  */
-@WebServlet(name = "LoginPaciente", urlPatterns = {"/admin/login-personal.do"})
-public class LoginPersonal extends HttpServlet {
+@WebServlet(name = "LogoutPersonal", urlPatterns = {"/admin/logout-personal.do"})
+public class LogoutPersonal extends HttpServlet {
 
     HttpSession userSession;
 
@@ -45,10 +40,10 @@ public class LoginPersonal extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginPaciente</title>");
+            out.println("<title>Servlet LogoutPersonal</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginPaciente at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet LogoutPersonal at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -66,18 +61,16 @@ public class LoginPersonal extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         request.setCharacterEncoding("utf-8");
-        response.setContentType("text/html;charset=utf-8");
+	response.setContentType("text/html;charset=utf-8");
 
         userSession = request.getSession();
 
         if (null == userSession.getAttribute("personal")) {
             response.sendRedirect("index.jsp");
         } else {
-            response.sendRedirect("panel.jsp");
+            doPost(request, response);
         }
-
     }
 
     /**
@@ -91,65 +84,14 @@ public class LoginPersonal extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         request.setCharacterEncoding("utf-8");
-        response.setContentType("text/html;charset=utf-8");
-
-        Map<String, String> mapMensajes = new HashMap<>();
-        int rut;
-
-        String tempRut = request.getParameter("rut");
-        String clave = request.getParameter("clave");
-
-        if (tempRut.trim().length() == 0) {
-            mapMensajes.put("rut", "Ingrese un Rut sin punto ni digito verificador.");
-        }
-
-        if (clave.trim().length() == 0) {
-            mapMensajes.put("clave", "Ingrese una clave de acceso.");
-        }
-
-        try {
-            rut = Integer.parseInt(tempRut);
-        } catch (Exception ex) {
-            mapMensajes.put("rut", "Error en el rut, ingrese solo números sin digito verificador ni puntos.");
-            rut = 0;
-        }
-
-        if (mapMensajes.isEmpty()) {
-
-            try {
-                if (new PersonalDAO().validarExiste(rut)) {
-
-                    if (new PersonalDAO().validarAcceso(rut, clave)) {
-
-                        userSession = request.getSession();
-
-                        PersonalDTO personal = new PersonalDAO().buscarPorRut(rut);
-                        userSession.setAttribute("personal", personal);
-                        userSession.setAttribute("tipoUsuario", new TipoUsuarioDAO().buscarPorId(personal.getTipoUsuario().getId()).getNombre());
-
-                        //request.getRequestDispatcher("/sistema/dashboard.jsp").forward(request, response);
-                        response.sendRedirect("panel.jsp");
-                        return;
-
-                    } else {
-                        mapMensajes.put("clave", "Clave incorrecta.");
-                    }
-
-                } else {
-                    mapMensajes.put("rut", "No existe un usuario con este RUT.");
-                }
-            } catch (Exception e) {
-                mapMensajes.put("basededatos", "Error de conexion.");
-            }
-
-        }
+	response.setContentType("text/html;charset=utf-8");
         
+        userSession = request.getSession();
+        userSession.invalidate();
 
-        request.setAttribute("mapMensajes", mapMensajes);
+        request.setAttribute("mensaje", "Sesión terminada.");
         request.getRequestDispatcher("/admin/index.jsp").forward(request, response);
-
     }
 
     /**

@@ -4,6 +4,8 @@
     Author     : Willywes
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="utils.EstadoSolicitudEmun"%>
 <%@page import="model.dao.CategoriaDAO"%>
 <%@page import="model.dto.ClienteDTO"%>
 <%@page import="model.dao.ClienteDAO"%>
@@ -73,13 +75,6 @@
                         <div uk-alert>
                             <a class="uk-alert-close" uk-close></a>
                             <div><c:out value="${mapMensajes['rut']}"/></div>
-                            <div><c:out value="${mapMensajes['dv']}"/></div>
-                            <div><c:out value="${mapMensajes['nombres']}"/></div>
-                            <div><c:out value="${mapMensajes['paterno']}"/></div>
-                            <div><c:out value="${mapMensajes['materno']}"/></div>
-                            <div><c:out value="${mapMensajes['telefono']}"/></div>
-                            <div><c:out value="${mapMensajes['email']}"/></div>
-                            <div><c:out value="${mapMensajes['tipo']}"/></div>
                         </div>
                     </c:if>
 
@@ -88,7 +83,28 @@
                             <h3>LISTADO DE SOLICITUDES</h3>
                         </div>
                         <div class="uk-width-1-4">
+                            <form action="solicitud.jsp" name="solicitudes" method="get">
 
+                                <%                                    
+                                    String v = request.getParameter("soli");
+                                    int soliValue = 0;
+                                    try {
+                                        soliValue = Integer.parseInt(v);
+                                    } catch (Exception ex) {
+                                    }
+                                %>
+
+                                <select class="uk-select" name="soli" onchange="document.solicitudes.submit()">
+
+                                    <c:set var="valor" value="<%= soliValue%>"/>
+                                    <option value="0" ${4 == valor ? 'selected':''}>Todas las Solicitudes</option>
+                                    <option value="1" ${1 == valor ? 'selected':''}>Pendientes</option>
+                                    <option value="2" ${2 == valor ? 'selected':''}>Aprobadas</option> 
+                                    <option value="3" ${3 == valor ? 'selected':''}>Rechazadas</option>
+                                </select>
+
+
+                            </form>
                         </div>
                     </div>
                     <table class="uk-table uk-table-striped uk-table-small uk-table-hover">
@@ -106,13 +122,46 @@
                         <tbody>
 
                             <%
-
                                 List<SolicitudDTO> listaSolicitudes = null;
+
                                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMM-yyyy");
 
                                 try {
 
-                                    listaSolicitudes = new SolicitudDAO().listarTodos();
+                                    if (soliValue == 1) {
+                                        
+                                        listaSolicitudes = new ArrayList<SolicitudDTO>();
+
+                                        for (SolicitudDTO p : new SolicitudDAO().listarTodos()) {
+                                            
+                                            if (p.getEstado().toString().equals("PENDIENTE")) {
+                                                
+                                                listaSolicitudes.add(p);
+                                            }
+                                        }
+                                    } else if (soliValue == 2) {
+
+                                        listaSolicitudes = new ArrayList<SolicitudDTO>();
+
+                                        for (SolicitudDTO p : new SolicitudDAO().listarTodos()) {
+
+                                            if (p.getEstado().toString().equals("APROBADA")) {
+                                                listaSolicitudes.add(p);
+                                            }
+                                        }
+                                    } else if (soliValue == 3) {
+
+                                        listaSolicitudes = new ArrayList<SolicitudDTO>();
+
+                                        for (SolicitudDTO p : new SolicitudDAO().listarTodos()) {
+
+                                            if (p.getEstado().toString().equals("RECHAZADA")) {
+                                                listaSolicitudes.add(p);
+                                            }
+                                        }
+                                    } else{
+                                        listaSolicitudes = new SolicitudDAO().listarTodos();
+                                    }
 
                                     for (SolicitudDTO p : listaSolicitudes) {
                                         out.println("<tr>");
@@ -156,7 +205,7 @@
 
                                         out.print("<div><strong>Fecha de la Solicitud : </strong>" + sdf.format(p.getFecha()) + "</div>");
                                         out.print("<div><strong>Estado de la Solicitud : </strong>");
-                                        
+
                                         if (p.getEstado().toString().equals("RECHAZADA")) {
                                             out.println("<span style='color:red;'><strong>" + p.getEstado().toString() + "</strong></span>");
                                         }
@@ -166,8 +215,8 @@
                                         if (p.getEstado().toString().equals("PENDIENTE")) {
                                             out.println("<span style='color:blue;'><strong>" + p.getEstado().toString() + "</strong></span>");
                                         }
-                                        
-                                         out.print("</div>");
+
+                                        out.print("</div>");
 
                                         out.print("<h3 style='margin: 5px 0;'>Detalles del Cliente</h3>");
                                         out.print("<div><strong>RUT : </strong>" + cli.getRut() + "-" + cli.getDv() + "</div>");

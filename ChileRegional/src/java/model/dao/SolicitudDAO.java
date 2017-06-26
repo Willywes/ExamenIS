@@ -196,5 +196,29 @@ public class SolicitudDAO {
 
         return lista;
     }
+    
+    public List<SolicitudDTO> listarPorClientes(int id) {
+
+        PreparedStatement ps;
+        ResultSet rs;
+        ArrayList<SolicitudDTO> lista = new ArrayList<>();
+
+        try {
+            ps = con.getConexion().prepareStatement("SELECT * FROM solicitud WHERE cliente_id = ?;");
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                lista.add(new SolicitudDTO(rs.getInt(1), rs.getTimestamp(2), new ClienteDAO().buscarPorId(rs.getInt(3)), new ProductoDAO().buscarPorId(rs.getInt(4)), new PersonalDAO().buscarPorId(rs.getInt(5)), EstadoSolicitudEmun.valueOf(rs.getString(6))));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(SolicitudDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            con.desconectar();
+        }
+
+        return lista;
+    }
 
 }
