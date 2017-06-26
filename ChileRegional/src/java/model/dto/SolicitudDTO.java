@@ -8,6 +8,7 @@ package model.dto;
 import java.sql.Timestamp;
 import utils.EstadoSolicitudEmun;
 
+
 /**
  *
  * @author Willywes

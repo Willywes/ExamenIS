@@ -21,12 +21,12 @@ public class PersonalDTO {
     private int telefono;
     private String email;
     private boolean activo;
-    private TipoPersonalDTO tipoPersonal;
+    private TipoUsuarioDTO tipoUsuario;
 
     public PersonalDTO() {
     }
 
-    public PersonalDTO(int id, int rut, String dv, String clave, String nombres, String paterno, String materno, int telefono, String email, boolean activo, TipoPersonalDTO tipoPersonal) {
+    public PersonalDTO(int id, int rut, String dv, String clave, String nombres, String paterno, String materno, int telefono, String email, boolean activo, TipoUsuarioDTO tipoUsuario) {
         this.id = id;
         this.rut = rut;
         this.dv = dv;
@@ -37,7 +37,7 @@ public class PersonalDTO {
         this.telefono = telefono;
         this.email = email;
         this.activo = activo;
-        this.tipoPersonal = tipoPersonal;
+        this.tipoUsuario = tipoUsuario;
     }
 
     public int getId() {
@@ -80,13 +80,13 @@ public class PersonalDTO {
         return activo;
     }
 
-    public TipoPersonalDTO getTipoPersonal() {
-        return tipoPersonal;
+    public TipoUsuarioDTO getTipoUsuario() {
+        return tipoUsuario;
     }
 
     @Override
     public String toString() {
-        return "PersonalDTO{" + "id=" + id + ", rut=" + rut + ", dv=" + dv + ", clave=" + clave + ", nombres=" + nombres + ", paterno=" + paterno + ", materno=" + materno + ", telefono=" + telefono + ", email=" + email + ", activo=" + activo + ", tipoPersonal=" + tipoPersonal.toString() + '}';
+        return "PersonalDTO{" + "id=" + id + ", rut=" + rut + ", dv=" + dv + ", clave=" + clave + ", nombres=" + nombres + ", paterno=" + paterno + ", materno=" + materno + ", telefono=" + telefono + ", email=" + email + ", activo=" + activo + ", tipoPersonal=" + tipoUsuario.toString() + '}';
     }
 
     

@@ -1,0 +1,23 @@
+
+
+.uk-navbar-container:not(.uk-navbar-transparent) {
+    background: linear-gradient(to left, #28a5f5, #1e87f0);
+    color: #FFF;
+}
+
+.uk-navbar-nav>li>a, .uk-logo {
+    color: #fff;
+}
+.uk-navbar-nav>li>a:hover, .uk-logo:hover{
+    color: #fff;
+}
+.uk-navbar-nav>li:hover{
+    background: rgba(0,0,0,0.1);
+}
+.uk-navbar-nav>li.uk-active>a {
+    color: #FFF;
+}
+
+.uk-notification-message {
+    background: #424242;
+}

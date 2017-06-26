@@ -33,7 +33,7 @@ public class PersonalDAO {
         PreparedStatement ps;
 
         try {
-            ps = con.getConexion().prepareCall(SQL_CREATE);
+            ps = con.getConexion().prepareStatement(SQL_CREATE);
 
             ps.setInt(1, p.getRut());
             ps.setString(2, p.getDv().toUpperCase());
@@ -43,7 +43,7 @@ public class PersonalDAO {
             ps.setString(6, p.getMaterno().toUpperCase());
             ps.setInt(7, p.getTelefono());
             ps.setString(8, p.getEmail().toLowerCase());
-            ps.setInt(9, p.getTipoPersonal().getId());
+            ps.setInt(9, p.getTipoUsuario().getId());
 
             if (ps.executeUpdate() > 0) {
 
@@ -64,7 +64,7 @@ public class PersonalDAO {
         PreparedStatement ps;
 
         try {
-            ps = con.getConexion().prepareCall(SQL_UPDATE);
+            ps = con.getConexion().prepareStatement(SQL_UPDATE);
 
             ps.setInt(1, p.getRut());
             ps.setString(2, p.getDv().toUpperCase());
@@ -74,7 +74,7 @@ public class PersonalDAO {
             ps.setString(6, p.getMaterno().toUpperCase());
             ps.setInt(7, p.getTelefono());
             ps.setString(8, p.getEmail().toLowerCase());
-            ps.setInt(9, p.getTipoPersonal().getId());
+            ps.setInt(9, p.getTipoUsuario().getId());
             ps.setInt(10, p.getId());
 
             if (ps.executeUpdate() > 0) {
@@ -96,7 +96,7 @@ public class PersonalDAO {
         PreparedStatement ps;
 
         try {
-            ps = con.getConexion().prepareCall("UPDATE personal SET activo = 1 WHERE id = ? ");
+            ps = con.getConexion().prepareStatement("UPDATE personal SET activo = 1 WHERE id = ? ");
             ps.setInt(1, id);
 
             if (ps.executeUpdate() > 0) {
@@ -118,7 +118,7 @@ public class PersonalDAO {
         PreparedStatement ps;
 
         try {
-            ps = con.getConexion().prepareCall("UPDATE personal SET activo = 0 WHERE id = ? ");
+            ps = con.getConexion().prepareStatement("UPDATE personal SET activo = 0 WHERE id = ? ");
             ps.setInt(1, id);
 
             if (ps.executeUpdate() > 0) {
@@ -161,7 +161,46 @@ public class PersonalDAO {
                         rs.getInt(8), //telefono
                         rs.getString(9), //email
                         rs.getBoolean(10), //activo
-                        new TipoPersonalDAO().buscarPorId(rs.getInt(11)) // tipo personal
+                        new TipoUsuarioDAO().buscarPorId(rs.getInt(11)) // tipo personal
+                );
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonalDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            con.desconectar();
+        }
+
+        return personal;
+    }
+    
+        public PersonalDTO buscarPorRut(int rut) {
+
+        PreparedStatement ps;
+        ResultSet rs;
+        PersonalDTO personal = null;
+
+        try {
+
+            ps = con.getConexion().prepareCall("SELECT * from personal WHERE rut = ?;");
+            ps.setInt(1, rut);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                personal = new PersonalDTO(
+                        rs.getInt(1), //id
+                        rs.getInt(2), // rut
+                        rs.getString(3), //dv
+                        rs.getString(4), //clave
+                        rs.getString(5), //nombres
+                        rs.getString(6), //paterno
+                        rs.getString(7), // materno
+                        rs.getInt(8), //telefono
+                        rs.getString(9), //email
+                        rs.getBoolean(10), //activo
+                        new TipoUsuarioDAO().buscarPorId(rs.getInt(11)) // tipo personal
                 );
             }
 
@@ -182,7 +221,7 @@ public class PersonalDAO {
 
         try {
 
-            ps = con.getConexion().prepareCall(SQL_READALL);
+            ps = con.getConexion().prepareStatement(SQL_READALL);
 
             rs = ps.executeQuery();
 
@@ -199,7 +238,7 @@ public class PersonalDAO {
                         rs.getInt(8), //telefono
                         rs.getString(9), //email
                         rs.getBoolean(10), //activo
-                        new TipoPersonalDAO().buscarPorId(rs.getInt(11))) // tipo personal
+                        new TipoUsuarioDAO().buscarPorId(rs.getInt(11))) // tipo personal
                 );
             }
 
@@ -210,5 +249,69 @@ public class PersonalDAO {
         }
 
         return lista;
+    }
+
+    public boolean validarExiste(int rut) {
+        PreparedStatement ps;
+        ResultSet rs;
+        int rutBuscar = 0;
+
+        try {
+
+            ps = con.getConexion().prepareStatement("SELECT rut FROM personal WHERE rut = ?;");
+            ps.setInt(1, rut);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                rutBuscar = rs.getInt(1); // rut de la base de datos
+
+            }
+
+            if (rut == rutBuscar) {
+                return true;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonalDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            con.desconectar();
+        }
+
+        return false;
+    }
+
+    public boolean validarAcceso(int rut, String clave) {
+        PreparedStatement ps;
+        ResultSet rs;
+        int rutBuscar = 0;
+        String claveBuscar = "";
+
+        try {
+
+            ps = con.getConexion().prepareStatement("SELECT rut, clave FROM personal WHERE rut = ?;");
+            ps.setInt(1, rut);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                rutBuscar = rs.getInt(1); // rut de la base de datos
+                claveBuscar = rs.getString(2); // clave
+
+            }
+
+            if (rut == rutBuscar && clave.equals(claveBuscar)) {
+                return true;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonalDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            con.desconectar();
+        }
+
+        return false;
     }
 }

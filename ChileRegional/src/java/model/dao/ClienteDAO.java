@@ -34,7 +34,7 @@ public class ClienteDAO {
 
         try {
 
-            ps = con.getConexion().prepareCall(SQL_CREATE);
+            ps = con.getConexion().prepareStatement(SQL_CREATE);
 
             ps.setInt(1, c.getRut());
             ps.setString(2, c.getDv().toUpperCase());
@@ -68,7 +68,7 @@ public class ClienteDAO {
 
         try {
 
-            ps = con.getConexion().prepareCall(SQL_UPDATE);
+            ps = con.getConexion().prepareStatement(SQL_UPDATE);
 
             ps.setInt(1, c.getRut());
             ps.setString(2, c.getDv().toUpperCase());
@@ -105,7 +105,7 @@ public class ClienteDAO {
 
         try {
 
-            ps = con.getConexion().prepareCall(SQL_READ);
+            ps = con.getConexion().prepareStatement(SQL_READ);
             ps.setInt(1, id);
 
             rs = ps.executeQuery();
@@ -174,5 +174,71 @@ public class ClienteDAO {
         }
 
         return lista;
+    }
+    
+    public boolean validarExiste(int rut) {
+
+        PreparedStatement ps;
+        ResultSet rs;
+        int rutBuscar = 0;
+
+        try {
+
+            ps = con.getConexion().prepareStatement("SELECT rut FROM cliente WHERE rut = ?;");
+            ps.setInt(1, rut);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                rutBuscar =  rs.getInt(1); // rut
+            }
+            
+            if (rut == rutBuscar) {
+                
+                return true;
+            } 
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            con.desconectar();
+        }
+
+        return false;
+    }
+    
+    public boolean validarAcesso(int rut, String clave) {
+
+        PreparedStatement ps;
+        ResultSet rs;
+        int rutBuscar = 0;
+        String claveBuscar = "";
+
+        try {
+
+            ps = con.getConexion().prepareStatement("SELECT rut, clave FROM cliente WHERE rut = ?;");
+            ps.setInt(1, rut);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                rutBuscar =  rs.getInt(1); // rut
+                claveBuscar = rs.getString(2);
+            }
+            
+            if (rut == rutBuscar && clave.equals(claveBuscar)) {
+                
+                return true;
+            } 
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            con.desconectar();
+        }
+
+        return false;
     }
 }

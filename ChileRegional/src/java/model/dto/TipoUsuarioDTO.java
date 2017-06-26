@@ -9,15 +9,15 @@ package model.dto;
  *
  * @author Willywes
  */
-public class TipoPersonalDTO {
+public class TipoUsuarioDTO {
     
     private int id;
     private String nombre;
 
-    public TipoPersonalDTO() {
+    public TipoUsuarioDTO() {
     }
 
-    public TipoPersonalDTO(int id, String nombre) {
+    public TipoUsuarioDTO(int id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
@@ -28,6 +28,11 @@ public class TipoPersonalDTO {
 
     public String getNombre() {
         return nombre;
+    }
+
+    @Override
+    public String toString() {
+        return "TipoUsuarioDTO{" + "id=" + id + ", nombre=" + nombre + '}';
     }
     
     
