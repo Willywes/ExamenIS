@@ -133,13 +133,7 @@
                         <p><a href="solicitud.jsp" class="uk-button uk-button-default">Acceder</a></p>
                     </div>
                 </div>
-                <div>
-                    <div class="uk-card uk-card-primary uk-card-body">
-                        <h3 class="uk-card-title">Clientes</h3>
-                        <p>Módulo de acceso a la lista de Clientes.</p>
-                        <p><a href="clientes.jsp" class="uk-button uk-button-default">Acceder</a></p>
-                    </div>
-                </div>
+                
             </div>
             </c:if>
             

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-06-2017 a las 11:55:46
+-- Tiempo de generación: 27-06-2017 a las 18:07:43
 -- Versión del servidor: 10.1.19-MariaDB
 -- Versión de PHP: 5.6.28
 
@@ -28,7 +28,6 @@ USE `chile_regional`;
 -- Estructura de tabla para la tabla `beneficiario`
 --
 
-DROP TABLE IF EXISTS `beneficiario`;
 CREATE TABLE `beneficiario` (
   `id` int(11) NOT NULL,
   `rut` int(8) NOT NULL,
@@ -55,7 +54,6 @@ INSERT INTO `beneficiario` (`id`, `rut`, `dv`, `nombres`, `paterno`, `materno`, 
 -- Estructura de tabla para la tabla `categoria`
 --
 
-DROP TABLE IF EXISTS `categoria`;
 CREATE TABLE `categoria` (
   `id` int(11) NOT NULL,
   `nombre` varchar(45) NOT NULL
@@ -67,7 +65,9 @@ CREATE TABLE `categoria` (
 
 INSERT INTO `categoria` (`id`, `nombre`) VALUES
 (37, 'SEGUROS DE VIDA'),
-(38, 'SEGUROS UNIVERSITARIOS');
+(38, 'ASISTENCIA EN VIAJE'),
+(39, 'ACCIDENTES PERSONALES'),
+(40, 'CATASTRÓFICOS Y ONCOLÓGICOS');
 
 -- --------------------------------------------------------
 
@@ -75,7 +75,6 @@ INSERT INTO `categoria` (`id`, `nombre`) VALUES
 -- Estructura de tabla para la tabla `cliente`
 --
 
-DROP TABLE IF EXISTS `cliente`;
 CREATE TABLE `cliente` (
   `id` int(11) NOT NULL,
   `rut` int(8) NOT NULL,
@@ -96,12 +95,9 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`id`, `rut`, `dv`, `clave`, `fecha_nac`, `nombres`, `paterno`, `materno`, `sexo`, `direccion`, `telefono`, `email`) VALUES
-(1, 12345678, '9', '1234', '1990-06-01', 'ALEJANDRO', 'CLIENTE1', 'MATERNO', 'MASCULINO', 'MI CASA', 321654987, 'alejandro@gmail.com'),
-(2, 11111111, '9', '1234', '1988-10-11', 'CLIENTE 2', 'PATERNO', 'MATERNO', 'MASCULINO', 'SU CASA', 639852147, 'alejandro@gmail.com'),
-(3, 14725836, '6', '1234', '1987-02-02', 'DSA', 'DSA', 'DSA', 'MASCULINO', 'SA', 29294963, 'alejandro.isla.c@gmail.com'),
-(7, 16483941, '9', '1234', '1998-02-15', 'DSA', 'DSA', 'DSA', 'MASCULINO', 'DSAD', 29294963, 'alejandro.isla.c@gmail.com'),
-(8, 12345698, '9', '1234', '2222-02-02', 'DSA', 'DSA', 'DSA', 'MASCULINO', 'SA', 91547853, 'alejandro.isla.c@gmail.com'),
-(9, 16483211, '1', '1234', '2017-12-15', 'DSA', 'DSA', 'DSA', 'MASCULINO', 'DSA', 12345, 'alejandro.isla.c@gmail.com');
+(1, 11111111, '9', '1234', '1990-06-01', 'CLIENTE 1', 'PATERNO', 'MATERNO', 'MASCULINO', 'MI CASA', 321654987, 'alejandro@gmail.com'),
+(2, 22222222, '9', '1234', '1988-10-11', 'CLIENTE 2', 'PATERNO', 'MATERNO', 'MASCULINO', 'SU CASA', 639852147, 'alejandro@gmail.com'),
+(10, 33333333, '5', '1234', '2000-02-15', 'CLIENTE 3', 'PATERNO', 'MATERNO', 'MASCULINO', 'DDASD', 32165487, 'alejandro.isla.c@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -109,7 +105,6 @@ INSERT INTO `cliente` (`id`, `rut`, `dv`, `clave`, `fecha_nac`, `nombres`, `pate
 -- Estructura de tabla para la tabla `contrato`
 --
 
-DROP TABLE IF EXISTS `contrato`;
 CREATE TABLE `contrato` (
   `id` int(11) NOT NULL,
   `cliente_id` int(11) NOT NULL,
@@ -137,7 +132,6 @@ INSERT INTO `contrato` (`id`, `cliente_id`, `fecha`, `categoria_producto`, `nomb
 -- Estructura de tabla para la tabla `contrato_beneficiario`
 --
 
-DROP TABLE IF EXISTS `contrato_beneficiario`;
 CREATE TABLE `contrato_beneficiario` (
   `contrato_id` int(11) NOT NULL,
   `beneficiario_id` int(11) NOT NULL,
@@ -158,7 +152,6 @@ INSERT INTO `contrato_beneficiario` (`contrato_id`, `beneficiario_id`, `porcenta
 -- Estructura de tabla para la tabla `personal`
 --
 
-DROP TABLE IF EXISTS `personal`;
 CREATE TABLE `personal` (
   `id` int(11) NOT NULL,
   `rut` int(8) NOT NULL,
@@ -178,10 +171,10 @@ CREATE TABLE `personal` (
 --
 
 INSERT INTO `personal` (`id`, `rut`, `dv`, `clave`, `nombres`, `paterno`, `materno`, `telefono`, `email`, `activo`, `tipo_usuario_id`) VALUES
-(1, 12345678, '1', '1234', 'VENDEDOR', 'PATERNO', 'MATERNO', 123456789, 'alejandro@gmail.com', 1, 3),
-(2, 16483941, '9', '1234', 'ALEJANDRO', 'ISLA', 'CARRASCO', 322929436, 'alejandro.isla.c@gmail.com', 1, 1),
-(18, 87654321, '2', '1234', 'SUPERVISOR', 'PATERNO', 'MATERNO', 321654987, 'super@gmail.com', 1, 2),
-(19, 14725836, 'K', '1234', 'VENDEDOR 2', 'PATERNO', 'MATERNO', 326549871, 'ds@xn--mfdslmf-5za.com', 1, 3);
+(1, 55555555, '1', '1234', 'VENDEDOR 1', 'PATERNO', 'MATERNO', 123456789, 'alejandro@gmail.com', 1, 3),
+(2, 11111111, '9', '1234', 'SUPERADMIN 1', 'PATERNO', 'MATERNO', 322929436, 'alejandro.isla.c@gmail.com', 1, 1),
+(18, 22222222, '2', '1234', 'SUPERVISOR 1', 'PATERNO', 'MATERNO', 321654987, 'super@gmail.com', 1, 2),
+(19, 66666666, 'K', '1234', 'VENDEDOR 2', 'PATERNO', 'MATERNO', 326549871, 'ds@xn--mfdslmf-5za.com', 1, 3);
 
 -- --------------------------------------------------------
 
@@ -189,7 +182,6 @@ INSERT INTO `personal` (`id`, `rut`, `dv`, `clave`, `nombres`, `paterno`, `mater
 -- Estructura de tabla para la tabla `producto`
 --
 
-DROP TABLE IF EXISTS `producto`;
 CREATE TABLE `producto` (
   `id` int(11) NOT NULL,
   `nombre` varchar(45) NOT NULL,
@@ -205,7 +197,8 @@ CREATE TABLE `producto` (
 INSERT INTO `producto` (`id`, `nombre`, `descripcion`, `valor_uf`, `categoria_id`) VALUES
 (24, 'PLAN 1000', 'Este seguro de vida es un seguro de vida de 1000 UF', 1000, 37),
 (25, 'PLAN 3000', 'Este es un seguro de vida de 3000', 3000, 37),
-(26, 'SEGURO DE VIDA', 'Seguro de vida para universitarios', 500, 38);
+(26, 'SEGURO EXPRESS 500', 'seguro de viajes express', 500, 38),
+(27, 'PLAN 5000', 'Este producto es de 500 uf', 5000, 37);
 
 -- --------------------------------------------------------
 
@@ -213,7 +206,6 @@ INSERT INTO `producto` (`id`, `nombre`, `descripcion`, `valor_uf`, `categoria_id
 -- Estructura de tabla para la tabla `solicitud`
 --
 
-DROP TABLE IF EXISTS `solicitud`;
 CREATE TABLE `solicitud` (
   `id` int(11) NOT NULL,
   `fecha` datetime NOT NULL,
@@ -230,7 +222,7 @@ CREATE TABLE `solicitud` (
 INSERT INTO `solicitud` (`id`, `fecha`, `cliente_id`, `producto_id`, `personal_id`, `estado`) VALUES
 (1, '2017-06-01 00:00:00', 1, 24, 1, 'PENDIENTE'),
 (2, '2017-06-01 00:00:00', 1, NULL, 1, 'RECHAZADA'),
-(3, '2017-06-26 13:29:21', 2, 24, 19, 'APROBADA');
+(6, '2017-06-27 11:48:49', 10, 24, 1, 'APROBADA');
 
 -- --------------------------------------------------------
 
@@ -238,7 +230,6 @@ INSERT INTO `solicitud` (`id`, `fecha`, `cliente_id`, `producto_id`, `personal_i
 -- Estructura de tabla para la tabla `solicitud_beneficiario`
 --
 
-DROP TABLE IF EXISTS `solicitud_beneficiario`;
 CREATE TABLE `solicitud_beneficiario` (
   `solicitud_id` int(11) NOT NULL,
   `beneficiario_id` int(11) NOT NULL,
@@ -259,7 +250,6 @@ INSERT INTO `solicitud_beneficiario` (`solicitud_id`, `beneficiario_id`, `porcen
 -- Estructura de tabla para la tabla `tipo_usuario`
 --
 
-DROP TABLE IF EXISTS `tipo_usuario`;
 CREATE TABLE `tipo_usuario` (
   `id` int(11) NOT NULL,
   `nombre` varchar(45) NOT NULL
@@ -362,12 +352,12 @@ ALTER TABLE `beneficiario`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 --
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT de la tabla `contrato`
 --
@@ -382,12 +372,12 @@ ALTER TABLE `personal`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT de la tabla `solicitud`
 --
 ALTER TABLE `solicitud`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `tipo_usuario`
 --

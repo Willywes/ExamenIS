@@ -25,7 +25,6 @@
             <c:if test="${sessionScope.tipoUsuario == 'SUPERVISOR'}">
                 <ul class="uk-navbar-nav">
                     <li><a href="solicitud.jsp">Solicitudes</a></li>
-                    <li><a href="clientes.jsp">Clientes</a></li>
                 </ul>
             </c:if>
             

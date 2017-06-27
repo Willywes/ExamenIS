@@ -85,7 +85,7 @@
 
                         <div class="uk-width-1-3"></div>
                         <div class="uk-card uk-card-default uk-card-body uk-width-2-3" style="margin-top: 30px;">
-                            <h2 class="uk-card-title">Aréa Clientes</h2>
+                            <h2 class="uk-card-title">Área Clientes</h2>
                             <div class="uk-width-1-1" style="border-bottom: 1px solid #c5c5c5; margin-top : 0px; margin-bottom: 15px;"></div>
                             <div>
                                 <c:if test="${not empty mapMensajes}">

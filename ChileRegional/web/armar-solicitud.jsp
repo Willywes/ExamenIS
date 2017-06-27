@@ -4,6 +4,8 @@
     Author     : Willywes
 --%>
 
+<%@page import="model.dao.ClienteDAO"%>
+<%@page import="model.dto.ClienteDTO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="java.text.NumberFormat"%>
 <%@page import="java.text.DecimalFormat"%>
@@ -212,11 +214,48 @@
                             </div>
                         </c:if>
                         <c:if test="${not empty sessionScope.cliente}">
+<div class="uk-child-width-1-1" uk-grid>
+                            <%
+                                HttpSession clienteSession = request.getSession();
+                                
+                                ClienteDTO cliente = null;
+                                ProductoDTO producto =null;
+                                
+                                if (null != clienteSession.getAttribute("cliente")) {
+                                    try {
+                                        cliente = (ClienteDTO)clienteSession.getAttribute("cliente");
+                                        int idPro = Integer.parseInt(request.getParameter("idProducto"));
+                                        producto = new ProductoDAO().buscarPorId(idPro);
+                                        
+                                        out.println("<h2>Confirmación de Solicitud de Producto</h2>");
+                                        out.println("<p><strong>PRODUCTO : </strong> "
+                                                + "" + producto.getNombre() +" "
+                                                + "<strong>VALOR : </strong>"
+                                                + "" + producto.getValorUF() +""
+                                                + " UF"
+                                                + "</p>");
+                                        out.println("<p><strong>NOMBRE DEL CLIENTE : </strong>"
+                                                + "" + cliente.getNombres()  +" "
+                                                + "" + cliente.getPaterno()+" "
+                                                + "" + cliente.getMaterno()+" "
+                                                
+                                                + "<strong>RUT : </strong>"
+                                                + "" + cliente.getRut()+"-"
+                                                + "" + cliente.getDv()  +" "
+                                   
+                                                + "</p>");
+                                        
+                                    } catch (Exception e) {
 
-                            <form action="test.do" method="GET">
+                                    }
+                                }
+                            %>
 
+                            <form action="confirmar-solicitud.do" method="POST">
+</div>
                                 <input type="hidden" name="idProducto" value="<% out.print(idProducto);%>"/>
-                                <button type="submit" name="accion" value="solicitar" class="uk-button uk-button-primary uk-width-1-1">Guardar</button>
+                                <input type="hidden" name="idCliente" value="<% out.print(cliente.getId()); %>"/>
+                                <button type="submit" name="accion" value="solicitar" class="uk-button uk-button-primary ">Confrimar envio de Solicitud</button>
                             </form>
                         </c:if>
 

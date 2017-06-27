@@ -114,7 +114,7 @@ public class LoginCliente extends HttpServlet {
 
                         clienteSession.setAttribute("cliente", new ClienteDAO().buscarPorRut(rut));
 
-                        response.sendRedirect("mis-solicitudes.jsp");
+                        response.sendRedirect("solicita-tu-seguro.jsp");
                         return;
                     } else {
                         mapMensajes.put("clave", "Clave incorrecta.");
