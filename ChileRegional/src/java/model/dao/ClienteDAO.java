@@ -136,6 +136,46 @@ public class ClienteDAO {
 
         return cliente;
     }
+    
+     public ClienteDTO buscarPorRut(int rut) {
+
+        PreparedStatement ps;
+        ResultSet rs;
+        ClienteDTO cliente = null;
+
+        try {
+
+            ps = con.getConexion().prepareStatement("SELECT * from cliente WHERE rut = ?");
+            ps.setInt(1, rut);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                cliente = new ClienteDTO(
+                        rs.getInt(1), //id
+                        rs.getInt(2), // rut
+                        rs.getString(3), //dv
+                        rs.getString(4), //clave
+                        rs.getTimestamp(5), //fecha 
+                        rs.getString(6), //nombres
+                        rs.getString(7), //paterno
+                        rs.getString(8), // materno
+                        rs.getString(9), // sexo
+                        rs.getString(10), // direccion
+                        rs.getInt(11), //telefono
+                        rs.getString(12) //email
+                );
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            con.desconectar();
+        }
+
+        return cliente;
+    }
 
     public List<ClienteDTO> leerTodos() {
 

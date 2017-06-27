@@ -61,7 +61,7 @@ public class ProductoDAO {
         try {
 
             ps = con.getConexion().prepareStatement(SQL_UPDATE);
-            ps.setString(1, p.getNombre());
+            ps.setString(1, p.getNombre().toUpperCase());
             ps.setString(2, p.getDescripcion());
             ps.setFloat(3, p.getValorUF());
             ps.setInt(4, p.getCategoria().getId());

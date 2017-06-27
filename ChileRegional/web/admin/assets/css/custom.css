@@ -8,8 +8,26 @@
 .uk-navbar-nav>li>a, .uk-logo {
     color: #fff;
 }
-.uk-navbar-nav>li>a:hover, .uk-logo:hover{
-    color: #fff;
+.uk-navbar-nav > li:hover > a,
+.uk-navbar-nav > li > a:focus,
+.uk-navbar-nav > li > a.uk-open,
+.uk-logo:hover,
+.uk-logo:focus{
+  color: #fff;
+  outline: none;
+}
+/* OnClick */
+.uk-navbar-nav > li > a:active {
+  color: #fff;
+}
+/* Active */
+.uk-navbar-nav > li.uk-active > a {
+  color: #fff;
+}
+/* Item
+ ========================================================================== */
+.uk-navbar-item {
+  color: #fff;
 }
 .uk-navbar-nav>li:hover{
     background: rgba(0,0,0,0.1);
@@ -21,3 +39,5 @@
 .uk-notification-message {
     background: #424242;
 }
+
+
