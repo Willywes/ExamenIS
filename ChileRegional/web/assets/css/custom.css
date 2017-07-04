@@ -1,8 +1,16 @@
 
 
-.uk-navbar-container:not(.uk-navbar-transparent) {
-    background: linear-gradient(to left, #ec0000, #ec0000);
+/*.uk-navbar-container:not(.uk-navbar-transparent) {
+    background: linear-gradient(to left, #424242, #ec0000);
     color: #FFF;
+}*/
+
+.uk-navbar-container:not(.uk-navbar-transparent) {
+    background: black;
+}
+
+.uk-button-primary{
+    background: pink;
 }
 
 .uk-navbar-nav>li>a, .uk-logo {
